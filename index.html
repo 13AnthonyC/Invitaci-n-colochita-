@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Invitación romántica 💖</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+
+  <body
+    class="min-h-screen flex items-center justify-center bg-gradient-to-b from-rose-50 via-rose-100 to-amber-50 p-6"
+  >
+    <div
+      class="max-w-xl w-full bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-rose-200"
+    >
+      <header class="mb-6 text-center">
+        <h1 class="text-3xl font-extrabold tracking-tight mb-2">
+          Mi invitación para esta noche
+        </h1>
+        <p class="text-sm italic text-rose-600">
+          Un suspiro y una promesa al calor del crepúsculo
+        </p>
+      </header>
+
+      <main class="space-y-6 text-center">
+        <p id="texto" class="text-lg leading-relaxed">
+          Esta noche la espero con ansias, porque quiero que la pasemos juntos
+          en una cita romántica, mi princesita hermosa.
+        </p>
+
+        <div class="flex gap-4 justify-center">
+          <button
+            id="btnAcepto"
+            class="px-6 py-3 rounded-full font-semibold shadow-md transform transition active:scale-95 border-2 border-rose-500 hover:scale-[1.02]"
+          >
+            Acepto mi amor
+          </button>
+
+          <button
+            id="btnPensarlo"
+            class="px-6 py-3 rounded-full font-medium bg-white/60 shadow-sm transform transition active:scale-95 border border-gray-300 hover:scale-[1.02]"
+          >
+            Mmm lo pensaré
+          </button>
+        </div>
+
+        <div id="respuesta" class="mt-4 hidden p-4 rounded-xl border"></div>
+      </main>
+
+      <footer class="mt-6 text-center text-xs text-gray-500">
+        <div>
+          Hecho con cariño y un poco de poesía — rompe el hielo y sonríe.
+        </div>
+      </footer>
+    </div>
+
+    <script>
+      const btnAcepto = document.getElementById("btnAcepto");
+      const btnPensarlo = document.getElementById("btnPensarlo");
+      const respuesta = document.getElementById("respuesta");
+
+      btnAcepto.addEventListener("click", () => {
+        respuesta.classList.remove("hidden");
+        respuesta.className =
+          "mt-4 p-4 rounded-xl border border-rose-300 bg-rose-50";
+        respuesta.innerHTML = `
+          <p class="font-semibold mb-2">¡Perfecto! 💫</p>
+          <p class="text-sm leading-relaxed">
+            Siuu, te espero esta noche. Cuando me escribas que aceptas, voy a sentir algo tan bonito como un hermoso atardecer, princesa.
+          </p>
+          <div class="mt-3 text-xs italic">
+            Cuando me escribas que aceptas, prepararé algo especial: una canción, un lugar con buena vista y muchas ganas.
+          </div>
+        `;
+      });
+
+      btnPensarlo.addEventListener("click", () => {
+        respuesta.classList.remove("hidden");
+        respuesta.className =
+          "mt-4 p-4 rounded-xl border border-amber-300 bg-amber-50";
+        respuesta.innerHTML = `
+          <p class="font-semibold mb-2">Está bien...</p>
+          <p class="text-sm leading-relaxed">
+            Entiendo, mi princesa. Piensa tranquila; aquí estaré, con calma y ganas de verte cuando tú decidas.
+          </p>
+        `;
+      });
+    </script>
+  </body>
+</html>
