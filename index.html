@@ -1,91 +1,185 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Invitación romántica 💖</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-  </head>
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Invitación</title>
+  <style>
+    :root{
+      --pink1:#ffe3ec;
+      --pink2:#ffd7e6;
+      --accent:#ff6fa3;
+      --text:#4b194f;
+    }
+    html,body{height:100%;margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,"Helvetica Neue",Arial;}
+    body{
+      background: radial-gradient(circle at 10% 10%, #fff0f6 0%, var(--pink1) 25%, var(--pink2) 60%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      color:var(--text);
+      overflow:hidden;
+    }
 
-  <body
-    class="min-h-screen flex items-center justify-center bg-gradient-to-b from-rose-50 via-rose-100 to-amber-50 p-6"
-  >
-    <div
-      class="max-w-xl w-full bg-white/80 backdrop-blur-md rounded-2xl shadow-2xl p-8 border border-rose-200"
-    >
-      <header class="mb-6 text-center">
-        <h1 class="text-3xl font-extrabold tracking-tight mb-2">
-          Mi invitación para esta noche
-        </h1>
-        <p class="text-sm italic text-rose-600">
-          Un suspiro y una promesa al calor del crepúsculo
-        </p>
-      </header>
+    /* Contenedor central */
+    .card{
+      width:100%;
+      max-width:720px;
+      background:rgba(255,255,255,0.85);
+      border-radius:18px;
+      padding:28px;
+      box-shadow:0 10px 30px rgba(123,40,120,0.08);
+      text-align:center;
+      position:relative;
+      z-index:2;
+    }
 
-      <main class="space-y-6 text-center">
-        <p id="texto" class="text-lg leading-relaxed">
-          Esta noche la espero con ansias, porque quiero que la pasemos juntos
-          en una cita romántica, mi princesita hermosa.
-        </p>
+    /* Texto de la invitación (solo lo que pediste) */
+    .inv{
+      font-size:20px;
+      line-height:1.4;
+      margin-bottom:20px;
+      color:var(--text);
+      font-weight:600;
+    }
 
-        <div class="flex gap-4 justify-center">
-          <button
-            id="btnAcepto"
-            class="px-6 py-3 rounded-full font-semibold shadow-md transform transition active:scale-95 border-2 border-rose-500 hover:scale-[1.02]"
-          >
-            Acepto mi amor
-          </button>
+    /* Botones */
+    .buttons{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:8px}
+    button{
+      padding:12px 18px;
+      border-radius:999px;
+      border:2px solid var(--accent);
+      background:transparent;
+      font-weight:700;
+      cursor:pointer;
+      outline:none;
+      transition:transform .12s ease, box-shadow .12s ease;
+      color:var(--accent);
+    }
+    button:active{transform:scale(.98)}
+    button.focus{box-shadow:0 6px 18px rgba(255,111,163,.12)}
+    .btn-accept{background:linear-gradient(180deg,#ffd1e6 0%, #ffb3d9 100%); color:#6a044d; border-color:#ff8cc0}
+    .btn-think{background:transparent; color:#6a044d; border-color:#e6a3c8}
 
-          <button
-            id="btnPensarlo"
-            class="px-6 py-3 rounded-full font-medium bg-white/60 shadow-sm transform transition active:scale-95 border border-gray-300 hover:scale-[1.02]"
-          >
-            Mmm lo pensaré
-          </button>
-        </div>
+    /* Zona de respuesta: solo mostrará exactamente lo que pediste */
+    #respuesta{
+      margin-top:12px;
+      font-weight:700;
+      font-size:18px;
+      min-height:1.2em;
+      color:#6a044d;
+      word-break:break-word;
+    }
 
-        <div id="respuesta" class="mt-4 hidden p-4 rounded-xl border"></div>
-      </main>
+    /* Corazones flotando */
+    .hearts{
+      position:fixed;
+      left:0;right:0;top:0;bottom:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:1;
+    }
+    .heart{
+      position:absolute;
+      width:18px;
+      height:18px;
+      background:var(--accent);
+      transform:rotate(-45deg);
+      left:50%;
+      top:50%;
+      opacity:0.95;
+      border-radius:3px 3px 0 0;
+      animation:floatUp linear infinite;
+      box-shadow:0 2px 6px rgba(255,111,163,.25);
+    }
+    .heart:after, .heart:before{
+      content:"";
+      position:absolute;
+      width:18px;
+      height:18px;
+      background:var(--accent);
+      border-radius:50%;
+    }
+    .heart:before{top:-9px; left:0}
+    .heart:after{left:9px; top:0}
 
-      <footer class="mt-6 text-center text-xs text-gray-500">
-        <div>
-          Hecho con cariño y un poco de poesía — rompe el hielo y sonríe.
-        </div>
-      </footer>
+    @keyframes floatUp{
+      0%{ transform: translateY(0) rotate(-45deg) scale(.9); opacity:0}
+      10%{ opacity:1}
+      100%{ transform: translateY(-120vh) rotate(10deg) scale(1.1); opacity:0}
+    }
+
+    /* Different sizes and timings */
+    .h1{width:12px;height:12px;animation-duration:8s; left:10%; animation-delay:0s}
+    .h2{width:20px;height:20px; animation-duration:11s; left:25%; animation-delay:1.2s}
+    .h3{width:14px;height:14px; animation-duration:9s; left:40%; animation-delay:.6s}
+    .h4{width:18px;height:18px; animation-duration:10s; left:55%; animation-delay:2s}
+    .h5{width:16px;height:16px; animation-duration:12s; left:70%; animation-delay:.3s}
+    .h6{width:22px;height:22px; animation-duration:13s; left:85%; animation-delay:1s}
+
+    /* ensure pseudo circles match resized hearts */
+    .heart.h1:before, .heart.h1:after{width:12px;height:12px; top:-6px; left:0; left:6px}
+    .heart.h2:before, .heart.h2:after{width:20px;height:20px; top:-10px; left:0; left:10px}
+    .heart.h3:before, .heart.h3:after{width:14px;height:14px; top:-7px; left:0; left:7px}
+    .heart.h4:before, .heart.h4:after{width:18px;height:18px; top:-9px; left:0; left:9px}
+    .heart.h5:before, .heart.h5:after{width:16px;height:16px; top:-8px; left:0; left:8px}
+    .heart.h6:before, .heart.h6:after{width:22px;height:22px; top:-11px; left:0; left:11px}
+
+    /* random horizontal positions via inline style in JS */
+  </style>
+</head>
+<body>
+  <div class="card" role="main" aria-label="Invitación">
+    <div class="inv" id="texto">
+      esta noche la espero con ansias, porque quiero que la pasemos juntos en una cita romántica mí princesita hermosa
     </div>
 
-    <script>
-      const btnAcepto = document.getElementById("btnAcepto");
-      const btnPensarlo = document.getElementById("btnPensarlo");
-      const respuesta = document.getElementById("respuesta");
+    <div class="buttons" aria-hidden="false">
+      <button class="btn-accept" id="acepto">Acepto mi amor</button>
+      <button class="btn-think" id="pensarlo">Mmm lo pensaré</button>
+    </div>
 
-      btnAcepto.addEventListener("click", () => {
-        respuesta.classList.remove("hidden");
-        respuesta.className =
-          "mt-4 p-4 rounded-xl border border-rose-300 bg-rose-50";
-        respuesta.innerHTML = `
-          <p class="font-semibold mb-2">¡Perfecto! 💫</p>
-          <p class="text-sm leading-relaxed">
-            Siuu, te espero esta noche. Cuando me escribas que aceptas, voy a sentir algo tan bonito como un hermoso atardecer, princesa.
-          </p>
-          <div class="mt-3 text-xs italic">
-            Cuando me escribas que aceptas, prepararé algo especial: una canción, un lugar con buena vista y muchas ganas.
-          </div>
-        `;
-      });
+    <div id="respuesta" aria-live="polite"></div>
+  </div>
 
-      btnPensarlo.addEventListener("click", () => {
-        respuesta.classList.remove("hidden");
-        respuesta.className =
-          "mt-4 p-4 rounded-xl border border-amber-300 bg-amber-50";
-        respuesta.innerHTML = `
-          <p class="font-semibold mb-2">Está bien...</p>
-          <p class="text-sm leading-relaxed">
-            Entiendo, mi princesa. Piensa tranquila; aquí estaré, con calma y ganas de verte cuando tú decidas.
-          </p>
-        `;
-      });
-    </script>
-  </body>
+  <div class="hearts" id="heartsContainer" aria-hidden="true"></div>
+
+  <script>
+    // Texts EXACTLY as the user requested
+    const textoAcepto = "Siuu, te espero esta noche, cuando me escribas que aceptas, voy a sentir algo tan bonito como cuando irán un hermoso atardecer princesa";
+    const textoPensarlo = "error 🤣";
+
+    const btnAcepto = document.getElementById('acepto');
+    const btnPensarlo = document.getElementById('pensarlo');
+    const respuesta = document.getElementById('respuesta');
+
+    btnAcepto.addEventListener('click', () => {
+      // show EXACT text only
+      respuesta.textContent = textoAcepto;
+    });
+
+    btnPensarlo.addEventListener('click', () => {
+      // show EXACT text only
+      respuesta.textContent = textoPensarlo;
+    });
+
+    // Create floating hearts with varied positions and timings
+    const container = document.getElementById('heartsContainer');
+    const classes = ['h1','h2','h3','h4','h5','h6'];
+    for(let i=0;i<18;i++){
+      const h = document.createElement('div');
+      h.className = 'heart ' + classes[i % classes.length];
+      // randomize left start position and animation delay
+      const left = Math.random()*100;
+      const delay = (Math.random()*6).toFixed(2) + 's';
+      const duration = (8 + Math.random()*8).toFixed(2) + 's';
+      h.style.left = left + 'vw';
+      h.style.top = (70 + Math.random()*30) + 'vh';
+      h.style.animationDelay = delay;
+      h.style.animationDuration = duration;
+      container.appendChild(h);
+    }
+  </script>
+</body>
 </html>
